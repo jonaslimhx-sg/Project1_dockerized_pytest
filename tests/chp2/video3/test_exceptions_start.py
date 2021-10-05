@@ -9,6 +9,5 @@ def test_make_one_point():
 
 def test_invalid_point_generation():  # TO DO
     with pytest.raises(ValueError) as exp:  # Context Manager
-        Point("Buenos Aires", 15.12345, -555.98053) # Validate Inputs
-    assert str(exp.value) == "Invalid latitude, longitude combination." # Validate Outputs
-    
+        Point("Buenos Aires", 15.12345, -555.98053)  # Validate Inputs
+    assert str(exp.value) == "Invalid latitude, longitude combination."  # Validate Outputs
