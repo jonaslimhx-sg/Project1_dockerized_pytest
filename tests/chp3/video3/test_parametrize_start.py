@@ -1,6 +1,5 @@
 import os
 import pytest
-
 from scripts import data_processor, data_aggregator
 
 
@@ -25,15 +24,12 @@ def process_data(city_list_location):
     yield _specify_type
 
 
-def test_average_atitude_per_country(process_data):
+@pytest.mark.parametrize("country,stats,value", [
+    ("Andorra", "Mean", 1641.42),
+    ("Andorra", "Median", 1538.02)
+])
+def test_atitude_per_country(process_data, country, stats, value):
     data = process_data(file_name_or_type="clean_map.csv")
-    andorran_avg_res = data_aggregator.atitude_stat_per_country(data, 'Andorra', 'Mean')
+    andorran_res = data_aggregator.atitude_stat_per_country(data, country, stats)
 
-    assert andorran_avg_res == {'Country': 'Andorra', 'Mean': 1641.42}
-
-
-def test_median_atitude_per_country(process_data):
-    data = process_data(file_name_or_type="clean_map.csv")
-    andorran_median_res = data_aggregator.atitude_stat_per_country(data, 'Andorra', 'Median')
-
-    assert andorran_median_res == {'Country': 'Andorra', 'Median': 1538.02}
+    assert andorran_res == {'Country': country, stats: value}
